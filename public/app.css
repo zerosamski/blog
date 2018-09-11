@@ -1,0 +1,55 @@
+body {
+    background: url("https://images.unsplash.com/photo-1521539816929-894a163bbb8f?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=4e5967e8367bb14963133dfa4ba313d1&auto=format&fit=crop&w=2176&q=80");
+	background-size: cover;
+	background-position: center;
+}
+
+/* Header */
+.fa-blogger{
+    font-size: 2em;
+    color: #DED6DA;
+}
+
+.headername {
+    padding-left: 10px;
+    color: #DED6DA;
+    font-size: 20px
+}
+
+.navbar {
+    background-color: rgba(64, 38, 36, 0.9);
+    border-color: #4E4C52;
+}
+
+.navitems{
+    color: #BFB0B0;
+}
+
+.navitems:hover {
+    color: white;
+}
+
+.navbar-burger {
+    color: #D98466;
+}
+
+.button.is-light.is-outlined {
+    border-color:#BFB0B0;
+    color: #BFB0B0;
+}
+
+/* hero */
+.title {
+    font-family: "Reenie Beanie", serif;
+    color: #402624;
+    font-size: 70px;
+}
+
+.subtitle {
+    color: #402624;
+}
+
+/* signup form */
+.formedits {
+    background-color: white;
+}

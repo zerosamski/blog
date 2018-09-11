@@ -10,6 +10,7 @@ app = express();
 app.set("view engine", "ejs")
 
 app.use(express.static("public"))
+app.use(express.static('node_modules/bulma/css'));
 app.use(bodyParser.urlencoded({extended: true}))
 
 
@@ -26,6 +27,9 @@ const Users = sequelize.define('users', {
     },
     lastName: {
         type: Sequelize.STRING
+    },
+    userName: {
+        type: Sequelize.STRING, unique: true
     },
     passWord: {
         type: Sequelize.STRING
@@ -77,8 +81,8 @@ app.get("/", (req, res) => {
     res.render("home")
 })
 
-app.get("/secret", (req, res) => {
-    res.render("secret")
+app.get("/signup", (req, res) => {
+    res.render("signup")
 })
 
 app.listen(3000, function() {
