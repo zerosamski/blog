@@ -52,7 +52,7 @@ const Comments = sequelize.define('comments', {
     }
 })
 
-sequelize.sync({force: true}).then(() => {
+sequelize.sync().then(() => {
 })
 
 Comments.belongsTo(Users)
@@ -82,20 +82,60 @@ app.get("/signup", (req, res) => {
 })
 
 app.post('/signup', (req, res) => {
-console.log(req.body)
+    console.log(req.body)
     Users.create({
         firstName: req.body.firstName,
         lastName: req.body.lastName,
         userName: req.body.userName,
-        passsWord: req.body.passWord
+        passWord: req.body.passWord
     })
     .then((user) => {
         req.session.user = user;
         res.redirect("/")
     })
-.catch(err => console.error('Error', err.stack))
-
+    .catch(err => console.error('Error', err.stack))
 })  
+
+//login
+app.get("/signin", (req, res) => {
+    let messageusername;
+    let messagepassword;
+    res.render("signin", {messageusername: messageusername, 
+        messagepassword: messagepassword})
+})
+
+app.post("/signin", (req, res) => { 
+    var messageusername;
+    var messagepassword;
+    var username = req.body.userName;
+    var password = req.body.passWord;
+        
+    Users.findOne({
+        where: {
+        userName: username
+        }
+    })
+    .then((user) => {
+        if (user === null) {
+            messageusername = "This user doesn't exist";
+            res.render("signin", {messageusername: messageusername, messagepassword: messagepassword})
+        }
+        if (user !== null && password === user.passWord) {
+            req.session.user = user;
+            res.send('blogs page')
+        } else {
+            messagepassword = "Username and password do not match"
+            res.render("signin", {messageusername: messageusername, messagepassword: messagepassword})
+        }
+    })
+    .catch(err => console.error('Error', err.stack))
+})
+
+//
+// app.get("/post") {
+//     res.send('this is the post page')
+// }
+
 
 app.listen(3000, function() {
     console.log("Server is listening on port 3000")
