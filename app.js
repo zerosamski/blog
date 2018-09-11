@@ -13,8 +13,8 @@ app.use(express.static("public"))
 app.use(express.static('node_modules/bulma/css'));
 app.use(bodyParser.urlencoded({extended: true}))
 
-
 const sequelize = new Sequelize('blog', process.env.PGUSER, 'password', {
+  storage: "./session.postgres",
   host: 'localhost',
   dialect: 'postgres',
   operatorsAliases: false
@@ -36,9 +36,6 @@ const Users = sequelize.define('users', {
     }
 });
 
-Users.sync({force: true}).then(() => {
-  })
-
 const Blogs = sequelize.define('blogs', {
     title: {
         type: Sequelize.STRING
@@ -47,10 +44,6 @@ const Blogs = sequelize.define('blogs', {
         type: Sequelize.STRING
     }
 })
-
-Blogs.sync({force: true}).then(() => {
-})
-
 Blogs.belongsTo(Users)
 
 const Comments = sequelize.define('comments', {
@@ -59,7 +52,7 @@ const Comments = sequelize.define('comments', {
     }
 })
 
-Comments.sync({force: true}).then(() => {
+sequelize.sync({force: true}).then(() => {
 })
 
 Comments.belongsTo(Users)
@@ -76,14 +69,33 @@ app.use(session({
 
 }))
 
+//routing
 
+//homepage
 app.get("/", (req, res) => {
     res.render("home")
 })
 
+//signing up
 app.get("/signup", (req, res) => {
     res.render("signup")
 })
+
+app.post('/signup', (req, res) => {
+console.log(req.body)
+    Users.create({
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
+        userName: req.body.userName,
+        passsWord: req.body.passWord
+    })
+    .then((user) => {
+        req.session.user = user;
+        res.redirect("/")
+    })
+.catch(err => console.error('Error', err.stack))
+
+})  
 
 app.listen(3000, function() {
     console.log("Server is listening on port 3000")
