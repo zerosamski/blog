@@ -1,30 +1,38 @@
 <% include partials/header %>
 
-<form action='/signin' method="POST">
+
 <div class="formedits">
-<p> Welcome back, please sign in!</p>
-<div class="field">
-  <label class="label">Username</label>
-  <div class="control">
-    <input class="input" type="text" name="userName" required>
-    <p id="message"><%= messageusername %></p>
-  </div>
+  <form action='/signin' method="POST">
+    <p> Welcome back, please sign in!</p>
+    
+    <div class="field">
+      <label class="label">
+        Username
+      </label>
+      <div class="control">
+        <input class="input" type="text" name="userName" required>
+        <p id="message"><%= messageusername %></p>
+      </div>
+    </div>
+
+    <div class="field">
+      <label class="label">
+        Password
+      </label>
+      <div class="control">
+        <input class="input" type="password" name="passWord" required>
+        <p id="message"><%= messagepassword %></p>
+      </div>
+    </div>
+
+    <div class="control">
+        <button class="button is-link">Submit</button>
+    </div>
+    <p id="donthave"> Don't have an account yet? <a href="/signup">Sign up!</a></p>
   
+  </form>
 </div>
 
-<div class="field">
-  <label class="label">Password</label>
-  <div class="control">
-    <input class="input" type="password" name="passWord" required>
-    <p id="message"><%= messagepassword %></p>
-  </div>
-</div>
-
-<div class="control">
-    <button class="button is-link">Submit</button>
-  </div>
-</div>
-</form>
 
 <% include partials/footer %>
 

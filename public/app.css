@@ -26,27 +26,37 @@ body {
 }
 
 .navitems:hover {
-    color: white;
+    color: #D98466;
 }
 
 .navbar-burger {
     color: #D98466;
 }
 
-.button.is-light.is-outlined {
-    border-color:#BFB0B0;
-    color: #BFB0B0;
+.headername:hover {
+    color: #D98466;
 }
 
 /* hero */
+
 .title {
     font-family: "Reenie Beanie", serif;
     color: #402624;
     font-size: 70px;
 }
 
+.subtitle:hover {
+    color: #D98466;
+}
+
 .subtitle {
     color: #402624;
+    
+}
+.text {
+    padding: 50px;
+    background-color: rgba(255, 255, 255, 0.85);
+    max-width: 580px;
 }
 
 /* signup/login form */
@@ -75,4 +85,14 @@ body {
     font-family: "Open Sans", sans-serif;
     font-size: 12px;
     color: red;
+}
+
+#donthave {
+    font-family: "Open Sans", sans-serif;
+    font-size: 15px;
+    padding-top: 10px;
+}
+
+#donthave a {
+    color: #736968
 }

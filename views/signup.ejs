@@ -1,39 +1,52 @@
 <% include partials/header %>
 
-<form action='/signup' method="POST">
 <div class="formedits">
-<p> Sign up and start blogging!</p>
-<div class="field">
-  <label class="label">First Name</label>
-  <div class="control">
-    <input class="input" type="text" name="firstName" required>
-  </div>
-</div>
+  <form action='/signup' method="POST">
+    <p> Sign up and start blogging!</p>
 
-<div class="field">
-  <label class="label">Last Name</label>
-  <div class="control">
-    <input class="input" type="text" name="lastName">
-  </div>
-</div>
+      <div class="field">
+        <label class="label">First Name</label>
+          <div class="control">
+            <input class="input" type="text" name="firstName" required>
+          </div>
+      </div>
 
-<div class="field">
-  <label class="label">Username</label>
-  <div class="control">
-    <input class="input" type="text" name="userName">
-  </div>
-</div>
+      <div class="field">
+        <label class="label">
+          Last Name
+        </label>
+        <div class="control">
+            <input class="input" type="text" name="lastName">
+          </div>
+      </div>
 
-<div class="field">
-  <label class="label">Password</label>
-  <div class="control">
-    <input class="input" type="password" name="passWord">
-  </div>
+      <div class="field">
+        <label class="label">
+          Username
+        </label>
+        <div class="control">
+          <input class="input" type="text" name="userName">
+        </div>
+      </div>
+
+      <div class="field">
+        <label class="label">
+          Password
+        </label>
+        <div class="control">
+          <input class="input" type="password" name="passWord">
+        </div>
+      </div>
+      
+      <div class="control">
+          <button class="button is-link">
+            Submit
+          </button>
+      </div>
+      
+      <p id="donthave"> Already have an account? <a href="/signin">Sign in!</a></p>
+  
+  </form>
 </div>
-<div class="control">
-    <button class="button is-link">Submit</button>
-  </div>
-</div>
-</form>
 
 <% include partials/footer %>

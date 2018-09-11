@@ -73,7 +73,12 @@ app.use(session({
 
 //homepage
 app.get("/", (req, res) => {
-    res.render("home")
+    console.log(req.session.user)
+    if (req.session.user === undefined) {
+        res.render("home")
+    } else {
+        res.render("blogs")
+    }
 })
 
 //signing up
@@ -131,11 +136,20 @@ app.post("/signin", (req, res) => {
     .catch(err => console.error('Error', err.stack))
 })
 
-//
-// app.get("/post") {
-//     res.send('this is the post page')
-// }
+//logging out
+app.get('/logout', (req, res) => {
+    req.session.destroy() 
+    .then(res.redirect("/"))
+    .catch(err => console.error('Error', err.stack))
+})
 
+//blog page
+app.get('/blogs', (req, res) => {
+    // if (req.session.user === null) {
+    //     res.redirect("/signin")
+    // }
+    res.render("blogs")
+})
 
 app.listen(3000, function() {
     console.log("Server is listening on port 3000")
