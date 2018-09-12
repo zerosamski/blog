@@ -52,7 +52,7 @@ const Comments = sequelize.define('comments', {
     }
 })
 
-sequelize.sync().then(() => {
+sequelize.sync({force: true}).then(() => {
 })
 
 Comments.belongsTo(Users)
@@ -145,11 +145,20 @@ app.get('/logout', (req, res) => {
 
 //blog page
 app.get('/blogs', (req, res) => {
-    // if (req.session.user === null) {
-    //     res.redirect("/signin")
-    // }
+    console.log(req.session.user)
+    if (req.session.user === undefined) {
+        res.redirect("/signin")
+    }
     res.render("blogs")
 })
+
+app.get('/blogs/new', (req, res) => {
+    // if(req.session.user === undefined) {
+    //     res.redirect("/signin")
+    // }
+    res.render("new")
+})
+
 
 app.listen(3000, function() {
     console.log("Server is listening on port 3000")

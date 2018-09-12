@@ -59,7 +59,7 @@ body {
     max-width: 580px;
 }
 
-/* signup/login form */
+/* form edits */
 .formedits {
     background-color: white;
     margin: 20px auto 0 auto;
@@ -80,6 +80,20 @@ body {
     font-family: "Open Sans", sans-serif;
 }
 
+.textarea:focus, .input:focus {
+    outline: none !important;
+    border:1px solid  rgba(64, 38, 36, 0.6);
+    box-shadow: 0 0 10px rgb(64, 38, 36);
+}
+
+.button.is-link {
+    background-color: rgba(64, 38, 36, 0.6)
+}
+
+.button.is-link:hover {
+    background-color: #D98466;
+}
+
 /* login */
 #message {
     font-family: "Open Sans", sans-serif;
@@ -96,3 +110,5 @@ body {
 #donthave a {
     color: #736968
 }
+
+
