@@ -39,7 +39,7 @@ const Users = sequelize.define('users', {
 
 const Blogs = sequelize.define('blogs', {
     title: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING, unique: true
     },
     body: {
         type: Sequelize.TEXT
@@ -173,9 +173,21 @@ app.post('/blogs/new', (req, res) => {
         body: req.body.body,
         userId: req.session.user.id
     })
-    .then(res.redirect("../blogs"))
+    .then(() => {
+        Blogs.findOne({
+        where: {
+            title: req.body.title
+        }
+        })
+        .then((blogid) => {
+            let blog = blogid;
+            console.log(`HELLO ${blog}`);
+            console.log(`HELLO ${typeof(blog)}`);
+            res.redirect(`/blogs/${blog.id}`)})
+    })
     .catch(err => console.error('Error', err.stack))
 })
+
 
 //show individual blog
 app.get("/blogs/:id", (req, res) => {
