@@ -53,7 +53,7 @@ const Comments = sequelize.define('comments', {
     }
 })
 
-sequelize.sync({force: true}).then(() => {
+sequelize.sync().then(() => {
 })
 
 Comments.belongsTo(Users)
@@ -83,22 +83,38 @@ app.get("/", (req, res) => {
 
 //signing up
 app.get("/signup", (req, res) => {
-    res.render("signup")
+    let warningname = "";
+    res.render("signup", {warningname: warningname})
 })
 
 app.post('/signup', (req, res) => {
-    Users.create({
-        firstName: req.body.firstName,
-        lastName: req.body.lastName,
-        userName: req.body.userName,
-        passWord: req.body.passWord
+    wantedname = req.body.userName
+
+    Users.findOne({
+        where: {
+            userName: wantedname
+        }
     })
-    .then((user) => {
-        req.session.user = user;
-        res.render("homeloggedin")
+    .then((result) => {
+        if (result === null) {
+    
+            Users.create({
+                firstName: req.body.firstName,
+                lastName: req.body.lastName,
+                userName: req.body.userName,
+                passWord: req.body.passWord
+            })
+            .then((user) => {
+                req.session.user = user;
+                res.render("homeloggedin")
+            })
+            .catch(err => console.error('Error', err.stack))
+        } else {
+            warningname = "This username is already taken!"
+            res.render("signup", {warningname: warningname})
+        }
     })
-    .catch(err => console.error('Error', err.stack))
-})  
+}) 
 
 //login
 app.get("/signin", (req, res) => {
@@ -119,6 +135,7 @@ app.post("/signin", (req, res) => {
         userName: username
         }
     })
+    
     .then((user) => {
         if (user === null) {
             messageusername = "This user doesn't exist";
@@ -164,28 +181,42 @@ app.get('/blogs/new', (req, res) => {
     if(req.session.user === undefined) {
         res.redirect("/signin")
     }
-    res.render("new")
+    warningtitle = "";
+    res.render("new", {warningtitle: warningtitle})
 })
 
-app.post('/blogs/new', (req, res) => { 
-    Blogs.create({
-        title: req.body.title,
-        body: req.body.body,
-        userId: req.session.user.id
-    })
-    .then(() => {
-        Blogs.findOne({
+app.post('/blogs/new', (req, res) => {
+    wantedtitle = req.body.title;
+
+    Blogs.findOne({
         where: {
-            title: req.body.title
+        title: wantedtitle
         }
-        })
-        .then((blogid) => {
-            let blog = blogid;
-            console.log(`HELLO ${blog}`);
-            console.log(`HELLO ${typeof(blog)}`);
-            res.redirect(`/blogs/${blog.id}`)})
     })
-    .catch(err => console.error('Error', err.stack))
+    .then((response) => {
+        console.log(response)
+        if (response === null) {
+            Blogs.create({
+                title: req.body.title,
+                body: req.body.body,
+                userId: req.session.user.id
+            })
+            .then(() => {
+                Blogs.findOne({
+                where: {
+                    title: req.body.title
+                }
+                })
+                .then((blogid) => {
+                    let blog = blogid;
+                    res.redirect(`/blogs/${blog.id}`)})
+            })
+            .catch(err => console.error('Error', err.stack))
+        } else {
+            warningtitle = "This title is already taken!"
+            res.render("new", {warningtitle: warningtitle})
+        }
+    })
 })
 
 
