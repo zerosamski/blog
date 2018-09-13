@@ -94,6 +94,12 @@ body {
     background-color: #D98466;
 }
 
+#titlelength {
+    font-family: "Open Sans", sans-serif;
+    font-size: 12px;
+    padding-top: 5px;
+}
+
 /* login */
 #message {
     font-family: "Open Sans", sans-serif;
@@ -111,4 +117,49 @@ body {
     color: #736968
 }
 
+/* blogs */
+#blogs {
+    padding-top: 20px
+}
 
+.left {
+    float: left;
+}
+.right {
+    float: right;
+    padding-top: 
+}
+
+.textcentered {
+    text-align: center;
+}
+
+#bloglist {
+    font-family: "Open Sans", sans-serif;
+    font-size: 15px;
+}
+
+ul {
+    list-style: disc;
+    margin-left: 10px;
+}
+
+.link {
+    color: #402624;
+}
+
+.link:hover {
+    color:  #D98466;
+}
+
+.comments {
+    font-size: 15px;
+    background: rgba(64, 38, 36, 0.3);
+    padding: 10px;
+    margin-top: 15px;
+    border-radius: 10px;
+}
+
+.leavecomment {
+    padding-top: 5px;
+}

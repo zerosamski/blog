@@ -1,4 +1,51 @@
 <% include partials/headerloggedin %> 
 
+<div class="container is-fluid" id="blogs">
+    <div class="columns is-multiline">
+
+        <% blogs.reverse().forEach(function(blog) { %>
+            <div class="column is-one-third">
+                <div class="box">
+                    <div class="content">
+                        
+                            <strong><div class="left"><%= blog.title %></div></strong> 
+                            <div class="right">
+                            <% var array = JSON.stringify(blog.createdAt) %>
+                            <% var newarray = "" %>
+                            <% for (var i = 1; i < 11; i++) { %>
+                                <% newarray += array[i]; %>
+                                <%console.log(newarray) %>
+                            <% } %>
+                            <%= newarray %>  
+                            </div>
+                            </br>
+                            by:  
+                            <% users.forEach(function(user) { %>
+                                <% if (user.id === blog.userId) { %>
+                                   <a class="link" href="/user/<%= user.id %> "> <%= user.firstName %> <%= user.lastName %></a>
+                                <%}%>
+                            <% }) %>
+                            
+                            </br>
+                            </br>
+                            <% var array = blog.body.split(" ") %>
+                            <% for (var i = 0; i <= 15; i++) { %>
+                                <%= array[i] %> 
+                            <% } %>
+                            </br>
+                            <a class="link" href="/blogs/<%= blog.id %>">Read more</a>
+                        
+
+                    </div>
+                </div>
+            </div>
+        <% }) %>
+    </div>
+</div>
+
+
+  
+
+
 
 <% include partials/footer%>

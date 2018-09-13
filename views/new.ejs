@@ -1,7 +1,10 @@
 <% include partials/headerloggedin %> 
 
+<script
+  src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+
 <div class="formedits">
-  <form action='blogs/new' method="POST">
+  <form action='/blogs/new' method="POST">
     <p> Create something today!</p>
     
     <div class="field">
@@ -9,7 +12,8 @@
         Title
       </label>
       <div class="control">
-        <input class="input" type="text" name="title" required>
+        <input id="target" class="input" type="text" name="title" maxlength="25" required>
+        <p id="titlelength"></p>
       </div>
     </div>
 
@@ -18,7 +22,7 @@
         Content
       </label>
       <div class="control">
-        <textarea class="textarea" rows="10" name="body" required> </textarea>
+        <textarea class="textarea" rows="10" name="body" required></textarea>
       </div>
     </div>
 
@@ -28,5 +32,19 @@
     
   </form>
 </div>
+
+<script>
+$("#target").keyup(function () {
+	title = $(this).val();
+    console.log(title)
+    if (title.length <=20) {
+    $("#titlelength").html(`Characters left: ${25 - title.length}`) 
+    $("#titlelength").css("color", "rgba(64, 38, 36, 0.6)")     
+    } else if (title.length > 20 && title.length <= 25) {
+        $("#titlelength").html(`Characters left: ${25 - title.length}`) 
+        $("#titlelength").css("color", "red")   
+    }
+})
+</script>
 
 <% include partials/footer%>
