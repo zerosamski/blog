@@ -77,7 +77,7 @@ app.get("/", (req, res) => {
     if (req.session.user === undefined) {
         res.render("home")
     } else {
-        res.render("blogs")
+        res.render("homeloggedin")
     }
 })
 
