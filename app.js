@@ -14,7 +14,7 @@ app.use(express.static("public"))
 app.use(express.static('node_modules/bulma/css'));
 app.use(bodyParser.urlencoded({extended: true}))
 
-const sequelize = new Sequelize('blog', process.env.DB_USER, process.env.DB_PASS, {
+const sequelize = new Sequelize(process.env.DB_NAME, process.env.DB_USER, process.env.DB_PASS, {
   storage: "./session.postgres",
   host: process.env.DB_HOST,
   dialect: 'postgres',
