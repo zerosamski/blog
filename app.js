@@ -1,4 +1,5 @@
 //requiring modules
+require('dotenv').config()
 const express = require('express');
 const bodyParser = require('body-parser');
 const session = require('express-session');
@@ -13,9 +14,9 @@ app.use(express.static("public"))
 app.use(express.static('node_modules/bulma/css'));
 app.use(bodyParser.urlencoded({extended: true}))
 
-const sequelize = new Sequelize('blog', process.env.PGUSER, 'password', {
+const sequelize = new Sequelize('blog', process.env.DB_USER, process.env.DB_PASS, {
   storage: "./session.postgres",
-  host: 'localhost',
+  host: process.env.DB_HOST,
   dialect: 'postgres',
   operatorsAliases: false
 })

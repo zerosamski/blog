@@ -13,55 +13,59 @@
         <% } %>
         <%= newarray %>  
     </div>
+    
     </br>
+
     <div class="by">
-    by:  
-    <% users.forEach(function(user) { %>
-        <% if (user.id === foundBlog.userId) { %>
-             <a class="link" href="/user/<%=user.id%>"> <%= user.firstName %> <%= user.lastName %></a>
-        <%}%>
-    <% }) %>
+        by:  
+        <% users.forEach(function(user) { %>
+            <% if (user.id === foundBlog.userId) { %>
+                <a class="link" href="/user/<%=user.id%>"> <%= user.firstName %> <%= user.lastName %></a>
+            <%}%>
+        <% }) %>
     </div>
+
     </br>
+
     <div class="blogtext">
-    <%= foundBlog.body %>
+        <%= foundBlog.body %>
     </div>
 
     <div class="comments">
-    <em>Comments</em>
-    <br>
-    <% comments.forEach(function(comment) { %>
-        <div>
-        Comment by: 
-        <% users.forEach(function(user) { %>
-            <% if (user.id === comment.userId) { %>
-                <a class="link" href="/user/<%=user.id%>"><%= user.firstName%> <%= user.lastName%></a>
-            <% } %>
-        <% }) %>
-        
+        <em>Comments</em>
         <br>
-            <%=comment.comment%>
-        <hr>
+        <% comments.forEach(function(comment) { %>
+        
+            <div>
+                Comment by: 
+                <% users.forEach(function(user) { %>
+                    <% if (user.id === comment.userId) { %>
+                        <a class="link" href="/user/<%=user.id%>"><%= user.firstName%> <%= user.lastName%></a>
+                    <% } %>
+                <% }) %>
+                <br>
+                <%=comment.comment%>
+                <hr>
+            </div>  
 
-      </div>  
-    <% }) %>
+        <% }) %>
     
     </div>
 
     <form class ="leavecomment" action='/blogs/<%=foundBlog.id%>' method="POST">
-    Leave a comment
+        Leave a comment
     
-    <div class="field">
-      <div class="control">
-        <textarea class="textarea" rows="2" name="comment" required></textarea>
-      </div>
-    </div>
+        <div class="field">
+            <div class="control">
+                <textarea class="textarea" rows="2" name="comment" required></textarea>
+            </div>
+        </div>
 
-    <div class="control">
-        <button class="button is-link">Submit</button>
-    </div>
+        <div class="control">
+            <button class="button is-link">Submit</button>
+        </div>
     
-  </form>
+    </form>
 </div>
 
 <% include partials/footer %>
