@@ -1,8 +1,5 @@
 <% include partials/headerloggedin %> 
 
-<script
-  src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-
 <div class="formedits">
   <form action='/blogs/new' method="POST">
     <p> 
@@ -14,7 +11,7 @@
         </label>
         <div class="control">
             <input id="target" class="input" type="text" name="title" maxlength="25" required>
-            <p id="titlelength"></p>
+            <p id="length"></p>
             <p id="message"><%= warningtitle %></p>
         </div>
     </div>
@@ -39,11 +36,11 @@
 $("#target").keyup(function () {
 	title = $(this).val();
     if (title.length <=20) {
-    $("#titlelength").html(`Characters left: ${25 - title.length}`) 
-    $("#titlelength").css("color", "rgba(64, 38, 36, 0.6)")     
+    $("#length").html(`Characters left: ${25 - title.length}`) 
+    $("#length").css("color", "rgba(64, 38, 36, 0.6)")     
     } else if (title.length > 20 && title.length <= 25) {
-        $("#titlelength").html(`Characters left: ${25 - title.length}`) 
-        $("#titlelength").css("color", "red")   
+        $("#length").html(`Characters left: ${25 - title.length}`) 
+        $("#length").css("color", "red")   
     }
 })
 </script>

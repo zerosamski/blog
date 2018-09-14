@@ -25,7 +25,8 @@
           Username
         </label>
         <div class="control">
-          <input class="input" type="text" name="userName">
+          <input id="target" class="input" type="text" name="userName">
+          <p id="length">Username must be eight characters or longer</p>
           <p id="message"><%= warningname %></p>
         </div>
       </div>
@@ -49,5 +50,19 @@
   
   </form>
 </div>
+
+<script>
+$("#target").keyup(function () {
+	username = $(this).val();
+  console.log(username)
+  if (username.length < 8 ) {
+    $("#length").html(`${8 - username.length} to go!`) 
+    $("#length").css("color", "red")  
+  } else if (username.length >=8) {
+    $("#length").html(`Username is now long enough`) 
+    $("#length").css("color", "rgba(64, 38, 36, 0.6)")     
+    }  
+  })
+</script>
 
 <% include partials/footer %>

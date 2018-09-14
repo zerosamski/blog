@@ -88,6 +88,10 @@ app.get("/signup", (req, res) => {
 })
 
 app.post('/signup', (req, res) => {
+    if (req.body.userName.length < 8) {
+            warningname = "Username must be longer than 8 characters!"
+            res.render("signup", {warningname: warningname})
+    }
     Users.findOne({
         where: {
             userName: req.body.userName
