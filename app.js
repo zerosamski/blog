@@ -243,6 +243,7 @@ app.post("/blogs/:id", (req, res) => {
     .catch(err => console.error('Error', err.stack))
 })
 
+//show blogs of logged in user
 app.get("/user", (req, res) => {
     Users.findById(req.session.user.id)
     .then((foundUser) => {
@@ -272,7 +273,12 @@ app.get("/user", (req, res) => {
     })
 })
 
-app.listen(3000, function() {
+//other routes
+    app.get("*", (req, res) => {
+        res.render("notfound")
+    })
+
+app.listen(3000, () => {
     console.log("Server is listening on port 3000")
 })
 
