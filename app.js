@@ -245,8 +245,22 @@ app.post("/blogs/:id", (req, res) => {
     .catch(err => console.error('Error', err.stack))
 })
 
+//show blogs of logged in user
+app.get("/user", (req, res) => {
+    Users.findById(req.session.user.id)
+    .then((foundUser) => {
+        Blogs.findAll({
+            where: {
+                userId: req.session.user.id
+            }
+        })
+        .then((userBlogs) => {
+            res.render("user", {foundUser: foundUser, userBlogs: userBlogs})
+        })
+    })
+})
 
-//show all blogs of user {
+//show all blogs of user 
     app.get("/user/:id", (req, res) => {
     Users.findById(req.params.id)
     .then((foundUser) => {
@@ -261,7 +275,12 @@ app.post("/blogs/:id", (req, res) => {
     })
 })
 
-app.listen(3000, function() {
+//other routes
+    app.get("*", (req, res) => {
+        res.render("notfound")
+    })
+
+app.listen(3000, () => {
     console.log("Server is listening on port 3000")
 })
 
