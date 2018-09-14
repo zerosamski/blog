@@ -5,6 +5,8 @@ const bodyParser = require('body-parser');
 const session = require('express-session');
 const Sequelize = require('sequelize');
 const SequelizeStore = require('connect-session-sequelize')(session.Store);
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
 
 //configuring modules
 app = express();
@@ -53,7 +55,7 @@ const Comments = sequelize.define('comments', {
     }
 })
 
-sequelize.sync().then(() => {
+sequelize.sync({force: true}).then(() => {
 })
 
 Comments.belongsTo(Users)
@@ -88,21 +90,19 @@ app.get("/signup", (req, res) => {
 })
 
 app.post('/signup', (req, res) => {
-    wantedname = req.body.userName
-
     Users.findOne({
         where: {
-            userName: wantedname
+            userName: req.body.userName
         }
     })
     .then((result) => {
         if (result === null) {
-    
+            let hash = bcrypt.hashSync(req.body.passWord, saltRounds);
             Users.create({
                 firstName: req.body.firstName,
                 lastName: req.body.lastName,
                 userName: req.body.userName,
-                passWord: req.body.passWord
+                passWord: hash
             })
             .then((user) => {
                 req.session.user = user;
@@ -125,14 +125,12 @@ app.get("/signin", (req, res) => {
 })
 
 app.post("/signin", (req, res) => { 
-    var messageusername;
-    var messagepassword;
-    var username = req.body.userName;
-    var password = req.body.passWord;
+    let messageusername;
+    let messagepassword;
         
     Users.findOne({
         where: {
-        userName: username
+        userName: req.body.userName
         }
     })
     
@@ -141,7 +139,7 @@ app.post("/signin", (req, res) => {
             messageusername = "This user doesn't exist";
             res.render("signin", {messageusername: messageusername, messagepassword: messagepassword})
         }
-        if (user !== null && password === user.passWord) {
+        if (user !== null && bcrypt.compareSync(req.body.passWord, user.passWord)) {
             req.session.user = user;
             res.redirect("blogs")
         } else {
@@ -186,11 +184,9 @@ app.get('/blogs/new', (req, res) => {
 })
 
 app.post('/blogs/new', (req, res) => {
-    wantedtitle = req.body.title;
-
     Blogs.findOne({
         where: {
-        title: wantedtitle
+        title: req.body.title
         }
     })
     .then((response) => {
@@ -207,8 +203,7 @@ app.post('/blogs/new', (req, res) => {
                     title: req.body.title
                 }
                 })
-                .then((blogid) => {
-                    let blog = blogid;
+                .then((blog) => {
                     res.redirect(`/blogs/${blog.id}`)})
             })
             .catch(err => console.error('Error', err.stack))
