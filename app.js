@@ -5,6 +5,8 @@ const bodyParser = require('body-parser');
 const session = require('express-session');
 const Sequelize = require('sequelize');
 const SequelizeStore = require('connect-session-sequelize')(session.Store);
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
 
 //configuring modules
 app = express();
@@ -84,13 +86,19 @@ app.get("/", (req, res) => {
 //signing up
 app.get("/signup", (req, res) => {
     let warningname = "";
-    res.render("signup", {warningname: warningname})
+    let warningpassword = "";
+    res.render("signup", {warningname: warningname, warningpassword: warningpassword})
 })
 
 app.post('/signup', (req, res) => {
+    warningname = "";
+    warningpassword = "";
     if (req.body.userName.length < 8) {
             warningname = "Username must be longer than 8 characters!"
-            res.render("signup", {warningname: warningname})
+            res.render("signup", {warningname: warningname, warningpassword: warningpassword})
+    } else if (req.body.passWord !== req.body.confirm) {
+        warningpassword = "Passwords do not match!"
+        res.render("signup", {warningname: warningname, warningpassword: warningpassword})
     }
     Users.findOne({
         where: {
@@ -99,12 +107,12 @@ app.post('/signup', (req, res) => {
     })
     .then((result) => {
         if (result === null) {
-    
+            let hash = bcrypt.hashSync(req.body.passWord, saltRounds);
             Users.create({
                 firstName: req.body.firstName,
                 lastName: req.body.lastName,
                 userName: req.body.userName,
-                passWord: req.body.passWord
+                passWord: hash
             })
             .then((user) => {
                 req.session.user = user;
@@ -112,8 +120,8 @@ app.post('/signup', (req, res) => {
             })
             .catch(err => console.error('Error', err.stack))
         } else {
-            warningname = "This username is already taken!"
-            res.render("signup", {warningname: warningname})
+            warningname = "That username is already taken!"
+            res.render("signup", {warningname: warningname, warningpassword: warningpassword})
         }
     })
 }) 
@@ -141,7 +149,7 @@ app.post("/signin", (req, res) => {
             messageusername = "This user doesn't exist";
             res.render("signin", {messageusername: messageusername, messagepassword: messagepassword})
         }
-        if (user !== null && req.body.passWord === user.passWord) {
+        if (user !== null && bcrypt.compareSync(req.body.passWord, user.passWord)) {
             req.session.user = user;
             res.redirect("blogs")
         } else {

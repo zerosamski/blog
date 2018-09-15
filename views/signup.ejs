@@ -25,8 +25,8 @@
           Username
         </label>
         <div class="control">
-          <input id="target" class="input" type="text" name="userName">
-          <p id="length">Username must be eight characters or longer</p>
+          <input id="targetusername" class="input" type="text" name="userName">
+          <p class="usermessage" id="querymessage">Username must be eight characters or longer</p>
           <p id="message"><%= warningname %></p>
         </div>
       </div>
@@ -36,7 +36,18 @@
           Password
         </label>
         <div class="control">
-          <input class="input" type="password" name="passWord">
+          <input id="targetpassword" class="input" type="password" name="passWord">
+        </div>
+      </div>
+
+      <div class="field">
+        <label class="label">
+          Confirm Password
+        </label>
+        <div class="control">
+          <input id="targetconfirm" class="input" type="password" name="confirm">
+          <p class="passmessage" id="querymessage"></p>
+          <p id="passwarning"><%= warningpassword %></p>
         </div>
       </div>
       
@@ -52,17 +63,38 @@
 </div>
 
 <script>
-$("#target").keyup(function () {
+$("#targetusername").keyup(function () {
 	username = $(this).val();
   console.log(username)
   if (username.length < 8 ) {
-    $("#length").html(`${8 - username.length} to go!`) 
-    $("#length").css("color", "red")  
+    $(".usermessage").html(`${8 - username.length} to go!`) 
+    $(".usermessage").css("color", "red")  
   } else if (username.length >=8) {
-    $("#length").html(`Username is now long enough`) 
-    $("#length").css("color", "rgba(64, 38, 36, 0.6)")     
+    $(".usermessage").html(`Username is long enough`) 
+    $(".usermessage").css("color", "rgba(64, 38, 36, 0.6)")     
     }  
   })
 </script>
+
+<script>
+$("#targetpassword").keyup(function () {
+	password = $(this).val();
+  $("#passwarning").html(``)
+  console.log(`this is ${password}`)
+  $("#targetconfirm").keyup(function () {
+    confirm = $("#targetconfirm").val();
+     console.log(`this is mpt ${confirm}`)
+    if (password === confirm) {
+      $(".passmessage").html(`Passwords match`)
+      $(".passmessage").css("color", "rgba(64, 38, 36, 0.6)")
+    }
+    else if (password !== confirm) {
+      $(".passmessage").html(`Passwords do not match`)
+      $(".passmessage").css("color", "red") 
+    }
+  })
+})
+</script>
+
 
 <% include partials/footer %>

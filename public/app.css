@@ -94,7 +94,7 @@ body {
     background-color: #D98466;
 }
 
-#length {
+#querymessage {
     font-family: "Open Sans", sans-serif;
     font-size: 12px;
     padding-top: 5px;
@@ -102,6 +102,12 @@ body {
 
 /* login */
 #message {
+    font-family: "Open Sans", sans-serif;
+    font-size: 12px;
+    color: red;
+}
+
+#passwarning {
     font-family: "Open Sans", sans-serif;
     font-size: 12px;
     color: red;
