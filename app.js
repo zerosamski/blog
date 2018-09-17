@@ -35,13 +35,8 @@ const Users = sequelize.define('users', {
         type: Sequelize.STRING, unique: true
     },
     passWord: {
-        type: Sequelize.STRING,
-        validate: {
-            len: {
-                args: [8, 256],
-            },
-        }
-    } 
+        type: Sequelize.STRING
+    }
 });
 
 const Blogs = sequelize.define('blogs', {
@@ -98,10 +93,7 @@ app.get("/signup", (req, res) => {
 app.post('/signup', (req, res) => {
     warningname = "";
     warningpassword = "";
-    if (req.body.userName.length < 8) {
-            warningname = "Username must be longer than 8 characters!"
-            res.render("signup", {warningname: warningname, warningpassword: warningpassword})
-    } else if (req.body.passWord !== null && req.body.passWord !== req.body.confirm) {
+    if (req.body.passWord !== null && req.body.passWord !== req.body.confirm) {
         warningpassword = "Passwords do not match!"
         res.render("signup", {warningname: warningname, warningpassword: warningpassword})
     } else {
