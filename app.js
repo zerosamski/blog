@@ -7,14 +7,16 @@ const Sequelize = require('sequelize');
 const SequelizeStore = require('connect-session-sequelize')(session.Store);
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
+const fileUpload = require('express-fileupload');
 
 //configuring modules
-app = express();
+const app = express();
 app.set("view engine", "ejs")
 
 app.use(express.static("public"))
 app.use(express.static('node_modules/bulma/css'));
 app.use(bodyParser.urlencoded({extended: true}))
+app.use(fileUpload());
 
 const sequelize = new Sequelize(process.env.DB_NAME, process.env.DB_USER, process.env.DB_PASS, {
   storage: "./session.postgres",
@@ -36,7 +38,7 @@ const Users = sequelize.define('users', {
     },
     passWord: {
         type: Sequelize.STRING
-    }
+    },
 });
 
 const Blogs = sequelize.define('blogs', {
@@ -109,9 +111,17 @@ app.post('/signup', (req, res) => {
                 firstName: req.body.firstName,
                 lastName: req.body.lastName,
                 userName: req.body.userName,
-                passWord: hash
-            })
+                passWord: hash,
+            })        
             .then((user) => {
+                let picture = req.files.profilepic;
+                picture.mv(__dirname + '/public/images/' + user.userName + '.jpg', function(err) {
+                    if (err) {
+                        console.log(err)
+                    } else {
+                    console.log('hello')
+                    }
+                })
                 req.session.user = user;
                 res.render("homeloggedin")
             })

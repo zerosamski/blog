@@ -1,7 +1,9 @@
 <% include partials/headerloggedin %> 
 
 <div class="formedits">
-<p class="textcentered" >Blogs by <%= foundUser.firstName %> <%=foundUser.lastName%> </p>
+
+<p class="textcentered" >Blogs by <%= foundUser.firstName %> <%=foundUser.lastName%> 
+<img class="profilepic" src="../images/<%=foundUser.userName%>.jpg"></p>
     <ul>
         <% userBlogs.reverse().forEach(function(blog) { %>
             <li>

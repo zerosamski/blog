@@ -133,7 +133,6 @@ body {
 }
 .right {
     float: right;
-    padding-top: 
 }
 
 .textcentered {
@@ -169,3 +168,12 @@ ul {
 .leavecomment {
     padding-top: 5px;
 }
+
+/* user */
+.profilepic {
+    width: 100px;
+    height: 100px;
+    border-radius: 50px;
+    vertical-align: middle;
+}
+
