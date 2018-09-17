@@ -35,8 +35,13 @@ const Users = sequelize.define('users', {
         type: Sequelize.STRING, unique: true
     },
     passWord: {
-        type: Sequelize.STRING
-    }
+        type: Sequelize.STRING,
+        validate: {
+            len: {
+                args: [8, 256],
+            },
+        }
+    } 
 });
 
 const Blogs = sequelize.define('blogs', {
