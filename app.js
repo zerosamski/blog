@@ -55,7 +55,7 @@ const Comments = sequelize.define('comments', {
     }
 })
 
-sequelize.sync().then(() => {
+sequelize.sync({force: true}).then(() => {
 })
 
 Comments.belongsTo(Users)
@@ -96,10 +96,10 @@ app.post('/signup', (req, res) => {
     if (req.body.userName.length < 8) {
             warningname = "Username must be longer than 8 characters!"
             res.render("signup", {warningname: warningname, warningpassword: warningpassword})
-    } else if (req.body.passWord !== req.body.confirm) {
+    } else if (req.body.passWord !== null && req.body.passWord !== req.body.confirm) {
         warningpassword = "Passwords do not match!"
         res.render("signup", {warningname: warningname, warningpassword: warningpassword})
-    }
+    } else {
     Users.findOne({
         where: {
             userName: req.body.userName
@@ -124,6 +124,7 @@ app.post('/signup', (req, res) => {
             res.render("signup", {warningname: warningname, warningpassword: warningpassword})
         }
     })
+}
 }) 
 
 //login

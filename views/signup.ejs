@@ -26,7 +26,6 @@
         </label>
         <div class="control">
           <input id="targetusername" class="input" type="text" name="userName">
-          <p class="usermessage" id="querymessage">Username must be eight characters or longer</p>
           <p id="message"><%= warningname %></p>
         </div>
       </div>
@@ -36,7 +35,8 @@
           Password
         </label>
         <div class="control">
-          <input id="targetpassword" class="input" type="password" name="passWord">
+          <input id="targetpassword" class="input" type="password" name="passWord" minlength="8">
+          <p class="passwordmessage" id="querymessage">Password must be eight characters or longer</p>
         </div>
       </div>
 
@@ -45,7 +45,7 @@
           Confirm Password
         </label>
         <div class="control">
-          <input id="targetconfirm" class="input" type="password" name="confirm">
+          <input id="targetconfirm" class="input" type="password" name="confirm" minlength="8">
           <p class="passmessage" id="querymessage"></p>
           <p id="passwarning"><%= warningpassword %></p>
         </div>
@@ -63,20 +63,19 @@
 </div>
 
 <script>
-$("#targetusername").keyup(function () {
-	username = $(this).val();
-  console.log(username)
-  if (username.length < 8 ) {
-    $(".usermessage").html(`${8 - username.length} to go!`) 
-    $(".usermessage").css("color", "red")  
-  } else if (username.length >=8) {
-    $(".usermessage").html(`Username is long enough`) 
-    $(".usermessage").css("color", "rgba(64, 38, 36, 0.6)")     
+//length of username
+$("#targetpassword").keyup(function () {
+	passlength = $(this).val()
+  if (passlength.length < 8 ) {
+    $(".passwordmessage").html(`${8 - passlength.length} to go!`) 
+    $(".passwordmessage").css("color", "red")  
+  } else if (passlength.length >=8) {
+    $(".passwordmessage").html(`Password is long enough`) 
+    $(".passwordmessage").css("color", "rgba(64, 38, 36, 0.6)")     
     }  
   })
-</script>
 
-<script>
+//matching passwords
 $("#targetpassword").keyup(function () {
 	password = $(this).val();
   $("#passwarning").html(``)
