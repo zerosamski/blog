@@ -114,6 +114,7 @@ app.post('/signup', (req, res) => {
                 passWord: hash,
             })        
             .then((user) => {
+                if (req.files.profilepic) {
                 let picture = req.files.profilepic;
                 picture.mv(__dirname + '/public/images/' + user.userName + '.jpg', function(err) {
                     if (err) {
@@ -122,6 +123,7 @@ app.post('/signup', (req, res) => {
                     console.log('hello')
                     }
                 })
+                }
                 req.session.user = user;
                 res.render("homeloggedin")
             })

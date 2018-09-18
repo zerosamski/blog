@@ -3,7 +3,7 @@
 <div class="formedits">
 
 <p class="textcentered" >Blogs by <%= foundUser.firstName %> <%=foundUser.lastName%> 
-<img class="profilepic" src="../images/<%=foundUser.userName%>.jpg"></p>
+<img id="foo" class="profilepic" src="../images/<%=foundUser.userName%>.jpg" onerror="this.onerror=null;this.src='../images/default.png';"></p>
     <ul>
         <% userBlogs.reverse().forEach(function(blog) { %>
             <li>
