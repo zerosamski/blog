@@ -25,7 +25,7 @@
           Username
         </label>
         <div class="control">
-          <input class="input" type="text" name="userName">
+          <input id="targetusername" class="input" type="text" name="userName">
           <p id="message"><%= warningname %></p>
         </div>
       </div>
@@ -35,7 +35,19 @@
           Password
         </label>
         <div class="control">
-          <input class="input" type="password" name="passWord">
+          <input id="targetpassword" class="input" type="password" name="passWord" minlength="8">
+          <p class="passwordmessage" id="querymessage">Password must be eight characters or longer</p>
+        </div>
+      </div>
+
+      <div class="field">
+        <label class="label">
+          Confirm Password
+        </label>
+        <div class="control">
+          <input id="targetconfirm" class="input" type="password" name="confirm" minlength="8">
+          <p class="passmessage" id="querymessage"></p>
+          <p id="passwarning"><%= warningpassword %></p>
         </div>
       </div>
       
@@ -49,5 +61,39 @@
   
   </form>
 </div>
+
+<script>
+//length of username
+$("#targetpassword").keyup(function () {
+	passlength = $(this).val()
+  if (passlength.length < 8 ) {
+    $(".passwordmessage").html(`${8 - passlength.length} to go!`) 
+    $(".passwordmessage").css("color", "red")  
+  } else if (passlength.length >=8) {
+    $(".passwordmessage").html(`Password is long enough`) 
+    $(".passwordmessage").css("color", "rgba(64, 38, 36, 0.6)")     
+    }  
+  })
+
+//matching passwords
+$("#targetpassword").keyup(function () {
+	password = $(this).val();
+  $("#passwarning").html(``)
+  console.log(`this is ${password}`)
+  $("#targetconfirm").keyup(function () {
+    confirm = $("#targetconfirm").val();
+     console.log(`this is mpt ${confirm}`)
+    if (password === confirm) {
+      $(".passmessage").html(`Passwords match`)
+      $(".passmessage").css("color", "rgba(64, 38, 36, 0.6)")
+    }
+    else if (password !== confirm) {
+      $(".passmessage").html(`Passwords do not match`)
+      $(".passmessage").css("color", "red") 
+    }
+  })
+})
+</script>
+
 
 <% include partials/footer %>
